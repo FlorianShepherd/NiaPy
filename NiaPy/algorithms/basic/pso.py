@@ -1,8 +1,8 @@
 # encoding=utf8
 # pylint: disable=mixed-indentation, line-too-long, singleton-comparison, multiple-statements, attribute-defined-outside-init, no-self-use, logging-not-lazy, unused-variable, arguments-differ, bad-continuation
 import logging
-from numpy import apply_along_axis, full, where
-from NiaPy.algorithms.algorithm import Algorithm
+from numpy import apply_along_axis, full, where, round
+from NiaPy.algorithms.algorithm import Algorithm, defaultNumPyInit
 from NiaPy.util import fullArray
 
 logging.basicConfig()
@@ -59,7 +59,8 @@ class ParticleSwarmAlgorithm(Algorithm):
 			'vMax': lambda x: isinstance(x, (int, float))
 		}
 
-	def setParameters(self, NP=25, C1=2.0, C2=2.0, w=0.7, vMin=-4, vMax=4, **ukwargs):
+	def setParameters(self, NP=25, C1=2.0, C2=2.0, w=0.7, vMin=-4, vMax=4, InitPopFunc=defaultNumPyInit, binary=False
+					  , **ukwargs):
 		r"""Set Particle Swarm Algorithm main parameters.
 
 		Args:
@@ -69,13 +70,16 @@ class ParticleSwarmAlgorithm(Algorithm):
 			w (Optional[float]): Inertial weight
 			vMin (Optional[float]): Mininal velocity
 			vMax (Optional[float]): Maximal velocity
+			InitPopFunc (Optional(func)): Init functions as in Algorithm Base Class
+			binary (Optional(bool)): If True, V is rounded and casted to int
 			**ukwargs: Additional arguments
 
 		See Also:
 			* :func:`NiaPy.algorithms.Algorithm.setParameters`
 		"""
-		Algorithm.setParameters(self, NP=NP)
+		Algorithm.setParameters(self, NP=NP, InitPopFunc=InitPopFunc)
 		self.C1, self.C2, self.w, self.vMin, self.vMax = C1, C2, w, vMin, vMax
+		self.binary = binary
 		if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))
 
 	def repair(self, x, l, u):
@@ -167,11 +171,17 @@ class ParticleSwarmAlgorithm(Algorithm):
 		"""
 		V = w * V + self.C1 * self.rand([self.NP, task.D]) * (popb - pop) + self.C2 * self.rand([self.NP, task.D]) * (xb - pop)
 		V = apply_along_axis(self.repair, 1, V, vMin, vMax)
+		if self.binary:
+			V = _to_int(V)
 		pop += V
 		pop = apply_along_axis(task.repair, 1, pop, rnd=self.Rand)
 		fpop = apply_along_axis(task.eval, 1, pop)
 		ip_pb = where(fpop > fpopb)
 		popb[ip_pb], fpopb[ip_pb] = pop[ip_pb], fpop[ip_pb]
 		return pop, fpop, {'popb': popb, 'fpopb': fpopb, 'w': w, 'vMin': vMin, 'vMax': vMax, 'V': V}
+
+def _to_int(V):
+	# rounds velocity update to integers
+	return round(V).astype(int)
 
 # vim: tabstop=3 noexpandtab shiftwidth=3 softtabstop=3
