@@ -173,10 +173,9 @@ class ParticleSwarmAlgorithm(Algorithm):
 		V = apply_along_axis(self.repair, 1, V, vMin, vMax)
 		if self.binary:
 			V = _to_int(V)
-		pop += V
-		pop = apply_along_axis(task.repair, 1, pop, rnd=self.Rand)
+		pop = apply_along_axis(task.repair, 1, pop + V, rnd=self.Rand)
 		fpop = apply_along_axis(task.eval, 1, pop)
-		ip_pb = where(fpop > fpopb)
+		ip_pb = where(fpop < fpopb)
 		popb[ip_pb], fpopb[ip_pb] = pop[ip_pb], fpop[ip_pb]
 		return pop, fpop, {'popb': popb, 'fpopb': fpopb, 'w': w, 'vMin': vMin, 'vMax': vMax, 'V': V}
 
