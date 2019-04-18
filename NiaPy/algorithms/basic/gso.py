@@ -89,6 +89,7 @@ class GlowwormSwarmOptimization(Algorithm):
 			s (Optional[float]): --
 			Distance (Optional[Callable[[numpy.ndarray, numpy.ndarray], float]]]): Measure distance between two individuals.
 		"""
+		Algorithm.setParameters(self, **ukwargs)
 		self.n, self.l0, self.nt, self.rho, self.gamma, self.beta, self.s, self.Distance = n, l0, nt, rho, gamma, beta, s, Distance
 		if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))
 
@@ -193,8 +194,9 @@ class GlowwormSwarmOptimization(Algorithm):
 					* rs (numpy.ndarray): TODO.
 		"""
 		rs = euclidean(full(task.D, 0), task.bRange)
-		GS, L, R = self.uniform(task.Lower, task.Upper, [self.n, task.D]), full(self.n, self.l0), full(self.n, rs)
-		GS_f = apply_along_axis(task.eval, 1, GS)
+		# GS, L, R = self.uniform(task.Lower, task.Upper, [self.n, task.D]), full(self.n, self.l0), full(self.n, rs)
+		GS, GS_f, _ = Algorithm.initPopulation(self, task)
+		# GS_f = apply_along_axis(task.eval, 1, GS)
 		return GS, GS_f, {'L': L, 'R': R, 'rs': rs}
 
 	def runIteration(self, task, GS, GS_f, xb, fxb, L, R, rs, **dparams):

@@ -90,7 +90,7 @@ class ForestOptimizationAlgorithm(Algorithm):
         See Also:
             * :func:`NiaPy.algorithms.Algorithm.setParameters`
         """
-        Algorithm.setParameters(self, NP=NP)
+        Algorithm.setParameters(self, NP=NP, **ukwargs)
         self.lt, self.al, self.lsc, self.gsc, self.tr = lt, al, lsc, gsc, tr
         if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))
 
@@ -208,7 +208,8 @@ class ForestOptimizationAlgorithm(Algorithm):
         See Also:
             * :func:`NiaPy.algorithms.Algorithm.initPopulation`
         """
-        Trees = self.uniform(task.Lower, task.Upper, [self.NP, task.D])
+        Trees, Evaluations, dx = Algorithm.initPopulation(self, task)
+        # Trees = self.uniform(task.Lower, task.Upper, [self.NP, task.D])
         z = zeros((self.NP, 1))
         Trees = append(Trees, z, axis=1)
         Evaluations = apply_along_axis(task.eval, 1, Trees[:, :-1])

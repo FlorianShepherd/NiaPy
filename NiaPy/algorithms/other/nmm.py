@@ -73,7 +73,7 @@ class NelderMeadMethod(Algorithm):
 		See Also:
 			* :func:`NiaPy.algorithms.Algorithm.setParameters`
 		"""
-		Algorithm.setParameters(self, NP=NP, InitPopFunc=self.initPop)
+		Algorithm.setParameters(self, **ukwargs)
 		self.alpha, self.gamma, self.rho, self.sigma = alpha, gamma, rho, sigma
 		if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))
 
@@ -91,8 +91,9 @@ class NelderMeadMethod(Algorithm):
 				1. New initialized population.
 				2. New initialized population fitness/function values.
 		"""
-		X = self.uniform(task.Lower, task.Upper, [task.D if NP is None or NP < task.D else NP, task.D])
-		X_f = apply_along_axis(task.eval, 1, X)
+		# X = self.uniform(task.Lower, task.Upper, [task.D if NP is None or NP < task.D else NP, task.D])
+		# X_f = apply_along_axis(task.eval, 1, X)
+		X, X_f, _ = Algorithm.initPopulation(self, task)
 		return X, X_f
 
 	def method(self, X, X_f, task):

@@ -79,7 +79,7 @@ class SineCosineAlgorithm(Algorithm):
 		See Also:
 			* :func:`NiaPy.algorithms.algorithm.Algorithm`
 		"""
-		Algorithm.setParameters(self, NP=NP)
+		Algorithm.setParameters(self, NP=NP, **ukwargs)
 		self.a, self.Rmin, self.Rmax = a, Rmin, Rmax
 		if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))
 

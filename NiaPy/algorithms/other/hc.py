@@ -72,6 +72,8 @@ class HillClimbAlgorithm(Algorithm):
 			* delta (float): TODO
 			* Neighborhood (Callable[numpy.ndarray, float, Task], Tuple[numpy.ndarray, float]]): Function for getting neighbours.
 		"""
+
+		Algorithm.setParameters(self, **ukwargs)
 		self.delta, self.Neighborhood = delta, Neighborhood
 		if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))
 
@@ -87,8 +89,9 @@ class HillClimbAlgorithm(Algorithm):
 				2. New individual function/fitness value.
 				3. Additional arguments.
 		"""
-		x = task.Lower + self.rand(task.D) * task.bRange
-		return x, task.eval(x), {}
+		x, x_f, _ = Algorithm.initPopulation(self, task)
+		# x = task.Lower + self.rand(task.D) * task.bRange
+		return x, x_f, {}
 
 	def runIteration(self, task, x, fx, xb, fxb, **dparams):
 		r"""Core function of HillClimbAlgorithm algorithm.

@@ -217,7 +217,9 @@ class GeneticAlgorithm(Algorithm):
 		})
 		return d
 
-	def setParameters(self, NP=25, Ts=5, Mr=0.25, Cr=0.25, Selection=TournamentSelection, Crossover=UniformCrossover, Mutation=UniformMutation, **ukwargs):
+	def setParameters(self, NP=25, Ts=5, Mr=0.25, Cr=0.25,
+					  Selection=TournamentSelection, Crossover=UniformCrossover,
+					  Mutation=UniformMutation, InitPopFunc=defaultIndividualInit, **ukwargs):
 		r"""Set the parameters of the algorithm.
 
 		Arguments:
@@ -244,7 +246,7 @@ class GeneticAlgorithm(Algorithm):
 				* :func:`NiaPy.algorithms.basic.CreepMutation`
 				* :func:`NiaPy.algorithms.basic.MutationUros`
 		"""
-		Algorithm.setParameters(self, NP=NP, itype=Individual, InitPopFunc=defaultIndividualInit)
+		Algorithm.setParameters(self, NP=NP, itype=Individual, InitPopFunc=InitPopFunc)
 		self.Ts, self.Mr, self.Cr = Ts, Mr, Cr
 		self.Selection, self.Crossover, self.Mutation = Selection, Crossover, Mutation
 		if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))

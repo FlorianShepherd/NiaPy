@@ -68,7 +68,7 @@ class CuckooSearch(Algorithm):
 		See Also:
 			* :func:`NiaPy.algorithms.Algorithm.setParameters`
 		"""
-		Algorithm.setParameters(self, NP=N)
+		Algorithm.setParameters(self, **ukwargs)
 		self.pa, self.alpha = pa, alpha
 		if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))
 

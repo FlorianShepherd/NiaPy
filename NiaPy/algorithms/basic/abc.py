@@ -88,7 +88,7 @@ class ArtificialBeeColonyAlgorithm(Algorithm):
 		See Also:
 			* :func:`NiaPy.algorithms.Algorithm.setParameters`
 		"""
-		Algorithm.setParameters(self, NP=NP, InitPopFunc=defaultIndividualInit, itype=SolutionABC, **ukwargs)
+		Algorithm.setParameters(self, NP=NP, itype=SolutionABC, **ukwargs)
 		self.FoodNumber, self.Limit = int(self.NP / 2), Limit
 		if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))
 

@@ -233,7 +233,7 @@ class AnarchicSocietyOptimization(Algorithm):
 				* :func:`NiaPy.algorithms.other.Crossover`
 				* :func:`NiaPy.algorithms.other.Sequential`
 		"""
-		Algorithm.setParameters(self, NP=NP)
+		Algorithm.setParameters(self, NP=NP, **ukwargs)
 		self.alpha, self.gamma, self.theta, self.d, self.dn, self.nl, self.F, self.CR, self.Combination = alpha, gamma, theta, d, dn, nl, F, CR, Combination
 		if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))
 

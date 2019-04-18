@@ -334,7 +334,7 @@ class MultipleTrajectorySearch(Algorithm):
 		See Also:
 			* :func:`NiaPy.algorithms.Algorithm.setParameters`
 		"""
-		Algorithm.setParameters(self, NP=M)
+		Algorithm.setParameters(self, **ukwargs)
 		self.NoLsTests, self.NoLs, self.NoLsBest, self.NoEnabled, self.BONUS1, self.BONUS2 = NoLsTests, NoLs, NoLsBest, NoEnabled, BONUS1, BONUS2
 		if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))
 

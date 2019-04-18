@@ -110,7 +110,7 @@ class KrillHerd(Algorithm):
 		See Also:
 			* :func:`NiaPy.algorithms.algorithm.Algorithm.setParameters`
 		"""
-		Algorithm.setParameters(self, NP=NP, **ukwargs)
+		Algorithm.setParameters(self, **ukwargs)
 		self.N_max, self.V_f, self.D_max, self.C_t, self.W_n, self.W_f, self.d_s, self.nn, self._Cr, self._Mu, self.epsilon = N_max, V_f, D_max, C_t, W_n, W_f, d_s, nn, Cr, Mu, epsilon
 		if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))
 

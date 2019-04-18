@@ -64,7 +64,7 @@ class HarmonySearch(Algorithm):
 		See Also:
 			* :func:`NiaPy.algorithms.algorithm.Algorithm.setParameters`
 		"""
-		Algorithm.setParameters(self, NP=HMS, **ukwargs)
+		Algorithm.setParameters(self, **ukwargs)
 		self.r_accept, self.r_pa, self.b_range = r_accept, r_pa, b_range
 		if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))
 

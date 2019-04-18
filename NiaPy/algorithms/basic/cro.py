@@ -144,7 +144,7 @@ class CoralReefsOptimization(Algorithm):
 		See Also:
 			* :func:`NiaPy.algorithms.Algorithm.setParameters`
 		"""
-		Algorithm.setParameters(self, NP=N)
+		Algorithm.setParameters(self, **ukwargs)
 		self.phi, self.Fa, self.Fb, self.Fd, self.k, self.P_Cr, self.P_F = phi, Fa, Fb, Fd, k, P_Cr, P_F
 		self.SexualCrossover, self.Brooding, self.Distance = SexualCrossover, Brooding, Distance
 		if ukwargs: logger.info('Unused arguments: %s' % (ukwargs))
